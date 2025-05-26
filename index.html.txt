@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Скачать видео с YouTube</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #1f1c2c, #928dab);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+    }
+    input {
+      width: 300px;
+      max-width: 90%;
+    }
+    button {
+      background-color: #ff4b2b;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #ff3a1a;
+    }
+    iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      margin: 20px 0;
+      border-radius: 10px;
+      display: none;
+    }
+    .btn-download {
+      display: none;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+    }
+    @media (max-width: 600px) {
+      iframe {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Скачать видео с YouTube</h1>
+  <input id="yt-link" type="text" placeholder="Вставьте ссылку на YouTube">
+  <button onclick="loadVideo()">Показать</button>
+
+  <iframe id="yt-frame" allowfullscreen></iframe>
+  <a id="download-btn" class="btn-download" target="_blank">Скачать видео</a>
+
+  <script>
+    function extractVideoID(url) {
+      const regExp = /(?:youtube\.com.*(?:\/|v=)|youtu\.be\/)([^&\n?#]+)/;
+      const match = url.match(regExp);
+      return match ? match[1] : null;
+    }
+
+    function loadVideo() {
+      const input = document.getElementById('yt-link').value.trim();
+      const videoID = extractVideoID(input);
+
+      if (!videoID) {
+        alert("Невалидная ссылка на видео.");
+        return;
+      }
+
+      const iframe = document.getElementById('yt-frame');
+      iframe.src = "https://www.youtube.com/embed/" + videoID;
+      iframe.style.display = "block";
+
+      const downloadLink = document.getElementById('download-btn');
+      downloadLink.href = "https://ssyoutube.com/watch?v=" + videoID;
+      downloadLink.style.display = "inline-block";
+    }
+  </script>
+</body>
+</html>
